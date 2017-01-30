@@ -2,5 +2,7 @@
   "name": "typux",
   "main": "lib/index.js",
   "types" : "lib/index.d.ts",
-  "version": "0.0.3"
+  "author": "Shvorak Alexey <dr.emerido@gmail.com>",
+  "version": "0.0.3",
+  "license": "MIT"
 }
