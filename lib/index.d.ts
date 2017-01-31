@@ -1,2 +1,2 @@
-export * from './src/meta';
-export * from './src/actions';
+export * from './meta';
+export * from './actions';
