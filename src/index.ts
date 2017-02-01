@@ -23,11 +23,5 @@ class UserLogin extends User
 let user = new User();
 let userLogin = new UserLogin();
 
-//
-// console.log(Object.getPrototypeOf(User.prototype).constructor);
-// console.log(Object.getPrototypeOf(UserLogin.prototype).constructor);
-//
 
-// console.log(getClassInfo(User), getClassInfo(user));
 let props = getClassInfo(userLogin).getProperties();
-console.log(props);

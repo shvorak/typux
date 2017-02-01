@@ -1,4 +1,5 @@
 import {getClassInfo} from "./meta";
+
 export enum InfoKind
 {
     Class,
@@ -6,8 +7,7 @@ export enum InfoKind
     Method
 }
 
-
-export abstract class Info
+export abstract class TypeInfo
 {
 
     public readonly name : string | symbol;
@@ -40,7 +40,7 @@ export abstract class Info
 
 }
 
-export class ClassInfo extends Info
+export class ClassInfo extends TypeInfo
 {
 
     kind = InfoKind.Class;
@@ -50,14 +50,14 @@ export class ClassInfo extends Info
     public readonly hash : string;
 
     constructor(hash: string, type: any) {
-        super(type.name, Object.getPrototypeOf(type.prototype));
+        super(type.name, type);
         this.hash = hash;
     }
 
     public getParent()
     {
-        let ctor = Object.getPrototypeOf(this.type).constructor;
-        if (ctor === Object) {
+        let ctor = Object.getPrototypeOf(this.type.prototype).constructor;
+        if (ctor === Object || ctor === Function) {
             return null
         }
         return ctor;
@@ -79,7 +79,7 @@ export class ClassInfo extends Info
 
     public getProperties(recursive = true) : PropertyInfo[]
     {
-        let result = [];
+        let result = [].concat(this.properties);
         let parent;
         if (recursive && (parent = this.getParent())) {
             result = result.concat(getClassInfo(parent).getProperties(recursive))
@@ -90,7 +90,8 @@ export class ClassInfo extends Info
 
 }
 
-export class PropertyInfo extends Info
+
+export class PropertyInfo extends TypeInfo
 {
 
     kind = InfoKind.Property;

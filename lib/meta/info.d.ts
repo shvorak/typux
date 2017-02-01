@@ -3,7 +3,7 @@ export declare enum InfoKind {
     Property = 1,
     Method = 2,
 }
-export declare abstract class Info {
+export declare abstract class TypeInfo {
     readonly name: string | symbol;
     readonly kind: InfoKind;
     readonly type: any;
@@ -13,7 +13,7 @@ export declare abstract class Info {
     hasAttribute(name: symbol, data?: any): boolean;
     getAttribute(name: symbol): any;
 }
-export declare class ClassInfo extends Info {
+export declare class ClassInfo extends TypeInfo {
     kind: InfoKind;
     private properties;
     readonly hash: string;
@@ -22,6 +22,6 @@ export declare class ClassInfo extends Info {
     addProperty(name: string | symbol, strict?: boolean): PropertyInfo;
     getProperties(recursive?: boolean): PropertyInfo[];
 }
-export declare class PropertyInfo extends Info {
+export declare class PropertyInfo extends TypeInfo {
     kind: InfoKind;
 }

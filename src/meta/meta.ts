@@ -18,9 +18,12 @@ export function getClassInfo<T>(type : Constructable<T> | T) : ClassInfo {
         type = type.constructor as any;
     }
     if (type[INFO_KEY] == null) {
-        type[INFO_KEY] = new ClassInfo(getRandomHash(), type);
-        dict[type[INFO_KEY].hash] = type[INFO_KEY];
+        let info = type[INFO_KEY] = new ClassInfo(getRandomHash(), type);
+        let hash = type[HASH_KEY] = info.hash;
+        // Save class info in custom store by hash string
+        dict[hash] = type[INFO_KEY];
     }
+
     return type[INFO_KEY];
 }
 
