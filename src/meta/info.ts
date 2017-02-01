@@ -1,4 +1,4 @@
-import {getClassInfo} from "./meta";
+import {metadata} from "./index";
 
 export enum InfoKind
 {
@@ -82,7 +82,7 @@ export class ClassInfo extends TypeInfo
         let result = [].concat(this.properties);
         let parent;
         if (recursive && (parent = this.getParent())) {
-            result = result.concat(getClassInfo(parent).getProperties(recursive))
+            result = result.concat(metadata.getClassInfo(parent).getProperties(recursive))
         }
 
         return result;

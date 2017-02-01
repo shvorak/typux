@@ -1,50 +1,65 @@
-"use strict";
-var info_1 = require("./info");
-var dict = {};
-var HASH_KEY = Symbol('meta.hash');
-var INFO_KEY = Symbol('meta.info');
+export * from './info';
+import {Constructable} from "../types";
+import {ClassInfo, PropertyInfo} from "./info";
+
+const dict : any = {};
+
+const HASH_KEY = Symbol('metadata.hash');
+const INFO_KEY = Symbol('metadata.info');
+
+
+export const metadata = {
+    getClassInfo,
+    getClassInfoByHash,
+    getPropertyInfo,
+    defineClassAttribute,
+    definePropertyAttribute
+};
+
 /**
  * Returns ClassInfo instance for passed class constructor
  *
  * @param {Function} type
  * @returns {ClassInfo}
  */
-function getClassInfo(type) {
+function getClassInfo<T>(type : Constructable<T> | T) : ClassInfo {
     if (typeof type === 'object') {
         // INSTANCE
-        type = type.constructor;
+        type = type.constructor as any;
     }
     if (type[INFO_KEY] == null) {
-        var info = type[INFO_KEY] = new info_1.ClassInfo(getRandomHash(), type);
-        var hash = type[HASH_KEY] = info.hash;
+        let info = type[INFO_KEY] = new ClassInfo(getRandomHash(), type);
+        let hash = type[HASH_KEY] = info.hash;
         // Save class info in custom store by hash string
         dict[hash] = type[INFO_KEY];
     }
+
     return type[INFO_KEY];
 }
-exports.getClassInfo = getClassInfo;
+
 /**
  * Returns existing class info by its hash value
  * @param {String} hash
  * @throws {Error}
  * @returns {ClassInfo}
  */
-function getClassInfoByHash(hash) {
+function getClassInfoByHash(hash : string) : ClassInfo {
     if (false === dict.hasOwnProperty(hash)) {
-        throw new Error("ClassInfo with hash code " + hash + " not registered");
+        throw new Error(`ClassInfo with hash code ${hash} not registered`);
     }
     return dict[hash];
 }
-exports.getClassInfoByHash = getClassInfoByHash;
+
 /**
  * Simple random string function
  *
  * @returns {string}
  */
-function getRandomHash() {
+export function getRandomHash()
+{
     return Math.random().toString(36).substr(2);
 }
-exports.getRandomHash = getRandomHash;
+
 /**
  * Return PropertyInfo
  * @param {Object | Function} target
@@ -54,17 +69,19 @@ exports.getRandomHash = getRandomHash;
  * @param {String | Symbol} property
  * @returns {PropertyInfo}
  */
-function getPropertyInfo(target, property) {
+function getPropertyInfo(target : Object, property : string | symbol) : PropertyInfo
+{
     return getClassInfo(Object.getPrototypeOf(target).constructor)
         .addProperty(property, false);
 }
-exports.getPropertyInfo = getPropertyInfo;
-function defineClassAttribute(target, name, data) {
+
+function defineClassAttribute(target, name : symbol, data : any)
+{
     getClassInfo(target).setAttribute(name, data);
 }
-exports.defineClassAttribute = defineClassAttribute;
-function definePropertyAttribute(target, property, name, data) {
+
+function definePropertyAttribute(target, property : string, name : symbol, data : any)
+{
     getClassInfo(target).addProperty(property, false)
         .setAttribute(name, data);
 }
-exports.definePropertyAttribute = definePropertyAttribute;

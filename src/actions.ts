@@ -1,4 +1,4 @@
-import {defineClassAttribute, getClassInfo} from "./meta/meta";
+import {metadata} from "./meta/index";
 
 /**
  * Symbol for define attribute in ClassInfo
@@ -25,7 +25,7 @@ export const actions = {};
 export function Action(name : string) : ClassDecorator
 {
     return function (target: Function) {
-        defineClassAttribute(target, ACTION, name);
+        metadata.defineClassAttribute(target, ACTION, name);
         actions[name] = target;
     }
 }
@@ -37,7 +37,7 @@ export function Action(name : string) : ClassDecorator
  * @returns {string|void}
  */
 export function getActionName(message : any) : string {
-    return getClassInfo(message).getAttribute(ACTION);
+    return metadata.getClassInfo(message).getAttribute(ACTION);
 }
 
 /**
@@ -51,7 +51,7 @@ export function getActionMessage(action : string) : any
     if (false === actions.hasOwnProperty(action)) {
         return false;
     }
-    let info = getClassInfo(actions[action]);
+    let info = metadata.getClassInfo(actions[action]);
     if (false === info.hasAttribute(ACTION, action)) {
         return false; // Hmmm, or exception
     }
