@@ -1,29 +1,59 @@
-import {getMetaOwner, getMeta, defineMeta} from "./meta";
-import {defineClassAttribute, getClassInfo, definePropertyAttribute} from "./meta/meta";
+import {defineClassAttribute, getClassInfo} from "./meta/meta";
 
-const ACTION  = Symbol('action');
-const TYPE  = Symbol('type');
+/**
+ * Symbol for define attribute in ClassInfo
+ *
+ * @type {Symbol}
+ */
+const ACTION  = Symbol('typux.action');
 
-// Class Decorator for messages
+/**
+ * Actions map
+ * Used for reverse plain action object
+ * data into message instance
+ * @type {{}}
+ */
+export const actions = {};
+
+/**
+ * Decorator for classes
+ *
+ * @param {string} name Action name
+ * @returns {ClassDecorator}
+ * @constructor
+ */
 export function Action(name : string) : ClassDecorator
 {
     return function (target: Function) {
         defineClassAttribute(target, ACTION, name);
+        actions[name] = target;
     }
 }
 
-export function Type(type : any) : PropertyDecorator {
-    return function (target: Object, property: string) {
-        definePropertyAttribute(target, property, TYPE, type)
-    }
-}
-
-// Action name accessor
+/**
+ * Get action name from message instance
+ *
+ * @param {Object} message
+ * @returns {string|void}
+ */
 export function getActionName(message : any) : string {
     return getClassInfo(message).getAttribute(ACTION);
 }
 
+/**
+ * Returns class constructor for message
+ *
+ * @param {String} action Action name
+ * @returns {Function|boolean}
+ */
 export function getActionMessage(action : string) : any
 {
-    return getMetaOwner(ACTION, action);
+    if (false === actions.hasOwnProperty(action)) {
+        return false;
+    }
+    let info = getClassInfo(actions[action]);
+    if (false === info.hasAttribute(ACTION, action)) {
+        return false; // Hmmm, or exception
+    }
+    return info.type;
 }
