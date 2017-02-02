@@ -80,7 +80,7 @@ function defineClassAttribute(target, name : symbol, data : any)
     getClassInfo(target).setAttribute(name, data);
 }
 
-function definePropertyAttribute(target, property : string, name : symbol, data : any)
+function definePropertyAttribute(target, property : string | symbol, name : symbol, data : any)
 {
     getClassInfo(target).addProperty(property, false)
         .setAttribute(name, data);

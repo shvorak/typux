@@ -6,7 +6,7 @@ export declare const metadata: {
     getClassInfoByHash: (hash: string) => ClassInfo;
     getPropertyInfo: (target: Object, property: string | symbol) => PropertyInfo;
     defineClassAttribute: (target: any, name: symbol, data: any) => void;
-    definePropertyAttribute: (target: any, property: string, name: symbol, data: any) => void;
+    definePropertyAttribute: (target: any, property: string | symbol, name: symbol, data: any) => void;
 };
 /**
  * Simple random string function
