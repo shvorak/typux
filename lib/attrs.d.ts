@@ -10,7 +10,6 @@ export declare const actions: {};
  *
  * @param {string} name Action name
  * @returns {ClassDecorator}
- * @constructor
  */
 export declare function Action(name: string): ClassDecorator;
 /**

@@ -1,10 +1,8 @@
 import {metadata} from "./meta/index";
 
-/**
- * Symbol for define attribute in ClassInfo
- *
- * @type {Symbol}
- */
+///////
+// Symbols for define attribute in ClassInfo
+///////
 const ACTION  = Symbol('typux.action');
 
 /**
@@ -20,11 +18,10 @@ export const actions = {};
  *
  * @param {string} name Action name
  * @returns {ClassDecorator}
- * @constructor
  */
 export function Action(name : string) : ClassDecorator
 {
-    return function (target: Function) {
+    return function (target : Function) {
         metadata.defineClassAttribute(target, ACTION, name);
         actions[name] = target;
     }
@@ -37,7 +34,11 @@ export function Action(name : string) : ClassDecorator
  * @returns {string|void}
  */
 export function getActionName(message : any) : string {
-    return metadata.getClassInfo(message).getAttribute(ACTION);
+    let info = metadata.getClassInfo(message);
+
+    return info.hasAttribute(ACTION)
+        ? info.getAttribute(ACTION)
+        : info.name;
 }
 
 /**
