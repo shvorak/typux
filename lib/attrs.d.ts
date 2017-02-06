@@ -1,3 +1,4 @@
+export declare const ACTION: symbol;
 /**
  * Actions map
  * Used for reverse plain action object

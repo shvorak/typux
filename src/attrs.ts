@@ -3,7 +3,7 @@ import {metadata} from "./meta/index";
 ///////
 // Symbols for define attribute in ClassInfo
 ///////
-const ACTION  = Symbol('typux.action');
+export const ACTION  = Symbol('typux.action');
 
 /**
  * Actions map

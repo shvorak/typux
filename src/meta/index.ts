@@ -9,12 +9,20 @@ const INFO_KEY = Symbol('metadata.info');
 
 
 export const metadata = {
+    getClasses,
     getClassInfo,
     getClassInfoByHash,
     getPropertyInfo,
     defineClassAttribute,
     definePropertyAttribute
 };
+
+function getClasses() : ClassInfo[]
+{
+    return Object.keys(dict).map(x => {
+        return dict[x];
+    });
+}
 
 /**
  * Returns ClassInfo instance for passed class constructor
