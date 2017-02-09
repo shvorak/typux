@@ -36,13 +36,27 @@ function getClassInfo<T>(type : Constructable<T> | T) : ClassInfo {
         type = type.constructor as any;
     }
     if (type[INFO_KEY] == null) {
-        let info = type[INFO_KEY] = new ClassInfo(getRandomHash(), type);
+        let base : any = getClassParent(<any>type);
+        if (base) {
+            base = getClassInfo(base);
+        }
+        let info = type[INFO_KEY] = new ClassInfo(getRandomHash(), type, base);
         let hash = type[HASH_KEY] = info.hash;
         // Save class info in custom store by hash string
         dict[hash] = type[INFO_KEY];
     }
 
     return type[INFO_KEY];
+}
+
+function getClassParent<T>(type : Constructable<T>) : Function
+{
+    let constructor = Object.getPrototypeOf(type.prototype).constructor;
+    if (constructor === Object || constructor === Function) {
+        return null;
+    }
+
+    return constructor;
 }
 
 /**

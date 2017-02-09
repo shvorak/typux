@@ -1,5 +1,3 @@
-import {metadata} from "./index";
-
 export enum InfoKind
 {
     Class,
@@ -48,19 +46,12 @@ export class ClassInfo extends TypeInfo
     private properties : PropertyInfo[] = [];
 
     public readonly hash : string;
+    public readonly parent: ClassInfo;
 
-    constructor(hash: string, type: any) {
+    constructor(hash: string, type: any, parent? : ClassInfo) {
         super(type.name, type);
         this.hash = hash;
-    }
-
-    public getParent()
-    {
-        let ctor = Object.getPrototypeOf(this.type.prototype).constructor;
-        if (ctor === Object || ctor === Function) {
-            return null
-        }
-        return ctor;
+        this.parent = parent;
     }
 
     public addProperty(name : string | symbol, strict = true) : PropertyInfo
@@ -80,9 +71,8 @@ export class ClassInfo extends TypeInfo
     public getProperties(recursive = true) : PropertyInfo[]
     {
         let result = [].concat(this.properties);
-        let parent;
-        if (recursive && (parent = this.getParent())) {
-            result = result.concat(metadata.getClassInfo(parent).getProperties(recursive))
+        if (recursive && this.parent) {
+            result = result.concat(this.parent.getProperties(recursive))
         }
 
         return result;

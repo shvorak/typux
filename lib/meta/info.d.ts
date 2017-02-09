@@ -17,8 +17,8 @@ export declare class ClassInfo extends TypeInfo {
     kind: InfoKind;
     private properties;
     readonly hash: string;
-    constructor(hash: string, type: any);
-    getParent(): any;
+    readonly parent: ClassInfo;
+    constructor(hash: string, type: any, parent?: ClassInfo);
     addProperty(name: string | symbol, strict?: boolean): PropertyInfo;
     getProperties(recursive?: boolean): PropertyInfo[];
 }
