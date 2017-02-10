@@ -9,6 +9,12 @@
     "type": "git",
     "url": "https://github.com/emerido/typux.git"
   },
+  "files": [
+    "lib/",
+    "tsd/",
+    "LICENSE",
+    "README.md"
+  ],
   "devDependencies": {
     "typescript": "^2.1.5"
   }

@@ -3,6 +3,9 @@
  * ex. let email : Nullable<string>;
  */
 export declare type Nullable<T> = T | null | undefined;
+/**
+ * Simple dictionary interface
+ */
 export interface Dictionary<TValue> {
     [index: string]: TValue;
 }
