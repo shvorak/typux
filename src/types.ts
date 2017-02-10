@@ -4,6 +4,12 @@
  */
 export type Nullable<T> = T | null | undefined;
 
+
+export interface Dictionary<TValue>
+{
+    [index : string] : TValue;
+}
+
 /**
  * Constructor type
  * ex. function find<T>(type : Constructable<T>) : T;
