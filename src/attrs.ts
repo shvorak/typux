@@ -6,6 +6,28 @@ import {metadata} from "./meta/index";
 export const ACTION  = Symbol('typux.action');
 
 /**
+ * Generic decorator for attributes
+ * @param {*} data
+ * @param {symbol} symbol
+ * @returns {(target:any, propertyKey:any, option:any)=>void}
+ */
+export function Attribute(data : any, symbol? : symbol) : ClassDecorator|PropertyDecorator|MethodDecorator
+{
+    return (target, propertyKey, option) => {
+        if (typeof target === 'function') {
+            metadata.defineClassAttribute(target, symbol, data);
+        } else {
+            if (typeof option === 'number') {
+                // Argument decorator
+                throw new Error('Attribute decorator doesn\'t support arguments right now');
+            } else {
+                metadata.definePropertyAttribute(target, propertyKey, symbol, data);
+            }
+        }
+    }
+}
+
+/**
  * Actions map
  * Used for reverse plain action object
  * data into message instance

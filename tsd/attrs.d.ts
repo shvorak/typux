@@ -1,5 +1,12 @@
 export declare const ACTION: symbol;
 /**
+ * Generic decorator for attributes
+ * @param {*} data
+ * @param {symbol} symbol
+ * @returns {(target:any, propertyKey:any, option:any)=>void}
+ */
+export declare function Attribute(data: any, symbol?: symbol): ClassDecorator | PropertyDecorator | MethodDecorator;
+/**
  * Actions map
  * Used for reverse plain action object
  * data into message instance
