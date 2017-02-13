@@ -8,7 +8,10 @@
     "declarationDir": "tsd/",
     "outDir": "lib/",
     "lib": ["dom", "es2015", "es2015.symbol"],
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noEmitHelpers": true,
+    "importHelpers": true
   },
   "exclude": [
     "node_modules"
