@@ -5,7 +5,7 @@ export declare const ACTION: symbol;
  * @param {symbol} symbol
  * @returns {(target:any, propertyKey:any, option:any)=>void}
  */
-export declare function Attribute(data: any, symbol?: symbol): ClassDecorator | PropertyDecorator | MethodDecorator;
+export declare function Attribute(symbol: symbol, data: any): ClassDecorator & PropertyDecorator & MethodDecorator & ParameterDecorator;
 /**
  * Actions map
  * Used for reverse plain action object

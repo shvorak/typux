@@ -19,6 +19,7 @@ export declare class ClassInfo extends TypeInfo {
     kind: InfoKind;
     private properties;
     readonly hash: string;
+    readonly ctor: MethodInfo;
     readonly parent: ClassInfo;
     constructor(hash: string, type: any, parent?: ClassInfo);
     addProperty(name: string | symbol, strict?: boolean): PropertyInfo;
@@ -26,4 +27,8 @@ export declare class ClassInfo extends TypeInfo {
 }
 export declare class PropertyInfo extends TypeInfo {
     kind: InfoKind;
+}
+export declare class MethodInfo extends TypeInfo {
+    kind: InfoKind;
+    constructor(type: Function);
 }

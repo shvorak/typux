@@ -55,11 +55,13 @@ export class ClassInfo extends TypeInfo
     private properties : PropertyInfo[] = [];
 
     public readonly hash : string;
+    public readonly ctor : MethodInfo;
     public readonly parent: ClassInfo;
 
     constructor(hash: string, type: any, parent? : ClassInfo) {
         super(type.name, type);
         this.hash = hash;
+        this.ctor = new MethodInfo(type);
         this.parent = parent;
     }
 
@@ -83,7 +85,6 @@ export class ClassInfo extends TypeInfo
         if (recursive && this.parent) {
             result = result.concat(this.parent.getProperties(recursive))
         }
-
         return result;
     }
 
@@ -94,5 +95,17 @@ export class PropertyInfo extends TypeInfo
 {
 
     kind = InfoKind.Property;
+
+}
+
+
+export class MethodInfo extends TypeInfo
+{
+
+    kind = InfoKind.Method;
+
+    constructor(type : Function) {
+        super(type.name);
+    }
 
 }

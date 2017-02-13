@@ -11,17 +11,27 @@ export const ACTION  = Symbol('typux.action');
  * @param {symbol} symbol
  * @returns {(target:any, propertyKey:any, option:any)=>void}
  */
-export function Attribute(data : any, symbol? : symbol) : ClassDecorator|PropertyDecorator|MethodDecorator
+export function Attribute(symbol : symbol, data : any) : ClassDecorator&PropertyDecorator&MethodDecorator&ParameterDecorator
 {
-    return (target, propertyKey, option) => {
+    return (target, name?, option?) => {
+
+        // TODO : Add custom attribute class support (auto generated symbol)
+
         if (typeof target === 'function') {
+            // Class decorator
             metadata.defineClassAttribute(target, symbol, data);
         } else {
             if (typeof option === 'number') {
                 // Argument decorator
                 throw new Error('Attribute decorator doesn\'t support arguments right now');
+            } else if (option === void 0) {
+                // Property decorator
+                metadata.definePropertyAttribute(target, name, symbol, data);
+            } else if (option === null || typeof option === 'object' && option !== null) {
+                // Method decorator, Getter/Setter
+                throw new Error('Attribute decorator doesn\'t support methods right now');
             } else {
-                metadata.definePropertyAttribute(target, propertyKey, symbol, data);
+                throw new Error('Invalid Attribute decorator call');
             }
         }
     }
