@@ -9,6 +9,7 @@ export declare const metadata: {
     defineClassAttribute: (target: any, name: symbol, data: any) => void;
     defineMethodAttribute: (target: any, property: string | symbol, name: symbol, data: any) => void;
     definePropertyAttribute: (target: any, property: string | symbol, name: symbol, data: any) => void;
+    defineParameterAttribute: (target: any, property: string | symbol, index: number, name: symbol, data: any) => void;
 };
 /**
  * Simple random string function

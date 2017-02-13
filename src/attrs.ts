@@ -16,22 +16,23 @@ export function Attribute(symbol : symbol, data : any) : ClassDecorator&Property
     return (target, name?, option?) => {
 
         // TODO : Add custom attribute class support (auto generated symbol)
-
         if (typeof target === 'function') {
             // Class decorator
             metadata.defineClassAttribute(target, symbol, data);
         } else {
             if (typeof option === 'number') {
-                // Argument decorator
-                throw new Error('Attribute decorator doesn\'t support arguments right now');
+                // Parameter decorator
+                metadata.defineParameterAttribute(target, name, option, symbol, data);
             } else if (option === void 0) {
                 // Property decorator
                 metadata.definePropertyAttribute(target, name, symbol, data);
             } else if (option === null || typeof option === 'object' && option !== null) {
-                // Method decorator, Getter/Setter
-                // TODO : Split methods and getters/setters definition
-                metadata.defineMethodAttribute(target, name, symbol, data);
-                // throw new Error('Attribute decorator doesn\'t support methods right now');
+                // Method decorator or Getter/Setter
+                if (typeof option.value === 'function') {
+                    metadata.defineMethodAttribute(target, name, symbol, data);
+                } else {
+                    metadata.definePropertyAttribute(target, name, symbol, data);
+                }
             } else {
                 throw new Error('Invalid Attribute decorator call');
             }

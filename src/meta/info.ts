@@ -3,7 +3,7 @@ export enum InfoKind
     Class,
     Property,
     Method,
-    Argument
+    Parameter
 }
 
 export abstract class TypeInfo
@@ -52,8 +52,8 @@ export class ClassInfo extends TypeInfo
 
     kind = InfoKind.Class;
 
-    private methods : MethodInfo[] = [];
-    private properties : PropertyInfo[] = [];
+    private _methods : MethodInfo[] = [];
+    private _properties : PropertyInfo[] = [];
 
     public readonly hash : string;
     public readonly ctor : MethodInfo;
@@ -66,49 +66,45 @@ export class ClassInfo extends TypeInfo
         this.parent = parent;
     }
 
-    public addProperty(name : string | symbol, strict = true) : PropertyInfo
-    {
-        let exists = this.properties.find(x => x.name == name);
-        if (exists != null) {
-            if (strict === true) {
-                throw new Error(`Property with name ${name} already registered`);
-            }
-            return exists;
-        }
-        let property = new PropertyInfo(name);
-        this.properties.push(property);
-        return property;
+    public get methods() {
+        return this._methods.slice();
     }
 
-    public getProperties(recursive = true) : PropertyInfo[]
+    public get properties() : PropertyInfo[] {
+        return this._properties.slice().concat(
+            this.parent ? this.parent.properties : []
+        )
+    }
+
+    public get ownProperties() : PropertyInfo[]
     {
-        let result = [].concat(this.properties);
-        if (recursive && this.parent) {
-            result = result.concat(this.parent.getProperties(recursive))
-        }
-        return result;
+        return this._properties.slice()
     }
 
     public ensureProperty(name) : PropertyInfo
     {
-        let exists = this.properties.find(x => x.name === name);
+        let exists = this._properties.find(x => x.name === name);
         if (exists) {
             return exists;
         }
-        let length = this.properties.push(new PropertyInfo(name));
+        let length = this._properties.push(new PropertyInfo(
+            name,
+            Object.getOwnPropertyDescriptor(this.type.prototype, name)
+        ));
 
-        return this.properties[length - 1];
+        return this._properties[length - 1];
     }
+
 
     public ensureMethod(name) : MethodInfo
     {
-        let exists = this.methods.find(x => x.name === name);
+        let exists = this._methods.find(x => x.name === name);
         if (exists) {
             return exists;
         }
-        let length = this.methods.push(new MethodInfo(name, this.type.prototype[name]));
+        let length = this._methods.push(new MethodInfo(name, this.type.prototype[name]));
 
-        return this.methods[length - 1];
+        return this._methods[length - 1];
     }
 
 }
@@ -119,6 +115,21 @@ export class PropertyInfo extends TypeInfo
 
     kind = InfoKind.Property;
 
+    private readonly _descriptor: PropertyDescriptor;
+
+    constructor(name: string | symbol, descriptor : PropertyDescriptor) {
+        super(name);
+        this._descriptor = descriptor;
+    }
+
+    public get readable() {
+        return this._descriptor == null || this._descriptor.get !== void 0;
+    }
+
+    public get writable() {
+        return this._descriptor == null || this._descriptor.set !== void 0;
+    }
+
 }
 
 
@@ -127,8 +138,36 @@ export class MethodInfo extends TypeInfo
 
     kind = InfoKind.Method;
 
+    private readonly _parameters : ParameterInfo[] = [];
+
     constructor(name : string | symbol, type : Function) {
         super(name, type);
+    }
+
+    public get parameters() {
+        return this._parameters.slice();
+    }
+
+    public ensureParameter(index : number) : ParameterInfo
+    {
+        let exists = this._parameters[index];
+        if (exists) {
+            return exists;
+        }
+        return this._parameters[index] = new ParameterInfo(index);
+    }
+
+}
+
+export class ParameterInfo extends TypeInfo
+{
+    kind = InfoKind.Parameter;
+
+    public readonly index: number;
+
+    constructor(index : number) {
+        super('');
+        this.index = index;
     }
 
 }

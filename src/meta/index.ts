@@ -15,7 +15,8 @@ export const metadata = {
     getPropertyInfo,
     defineClassAttribute,
     defineMethodAttribute,
-    definePropertyAttribute
+    definePropertyAttribute,
+    defineParameterAttribute
 };
 
 function getClasses() : ClassInfo[]
@@ -100,17 +101,28 @@ function getPropertyInfo(target : Object, property : string | symbol) : Property
 
 function defineClassAttribute(target, name : symbol, data : any)
 {
-    getClassInfo(target).setAttribute(name, data);
+    getClassInfo(target)
+        .setAttribute(name, data);
 }
 
 function defineMethodAttribute(target, property : string | symbol, name : symbol, data : any)
 {
-    getClassInfo(target).ensureMethod(property)
+    getClassInfo(target)
+        .ensureMethod(property)
         .setAttribute(name, data);
 }
 
 function definePropertyAttribute(target, property : string | symbol, name : symbol, data : any)
 {
-    getClassInfo(target).addProperty(property, false)
+    getClassInfo(target)
+        .ensureProperty(property)
+        .setAttribute(name, data);
+}
+
+function defineParameterAttribute(target, property : string | symbol, index : number, name : symbol, data : any)
+{
+    getClassInfo(target)
+        .ensureMethod(property)
+        .ensureParameter(index)
         .setAttribute(name, data);
 }
