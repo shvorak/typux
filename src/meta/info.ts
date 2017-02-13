@@ -52,6 +52,7 @@ export class ClassInfo extends TypeInfo
 
     kind = InfoKind.Class;
 
+    private methods : MethodInfo[] = [];
     private properties : PropertyInfo[] = [];
 
     public readonly hash : string;
@@ -61,7 +62,7 @@ export class ClassInfo extends TypeInfo
     constructor(hash: string, type: any, parent? : ClassInfo) {
         super(type.name, type);
         this.hash = hash;
-        this.ctor = new MethodInfo(type);
+        this.ctor = new MethodInfo(this.name, type);
         this.parent = parent;
     }
 
@@ -88,6 +89,28 @@ export class ClassInfo extends TypeInfo
         return result;
     }
 
+    public ensureProperty(name) : PropertyInfo
+    {
+        let exists = this.properties.find(x => x.name === name);
+        if (exists) {
+            return exists;
+        }
+        let length = this.properties.push(new PropertyInfo(name));
+
+        return this.properties[length - 1];
+    }
+
+    public ensureMethod(name) : MethodInfo
+    {
+        let exists = this.methods.find(x => x.name === name);
+        if (exists) {
+            return exists;
+        }
+        let length = this.methods.push(new MethodInfo(name, this.type.prototype[name]));
+
+        return this.methods[length - 1];
+    }
+
 }
 
 
@@ -104,8 +127,8 @@ export class MethodInfo extends TypeInfo
 
     kind = InfoKind.Method;
 
-    constructor(type : Function) {
-        super(type.name);
+    constructor(name : string | symbol, type : Function) {
+        super(name, type);
     }
 
 }

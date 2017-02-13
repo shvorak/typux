@@ -14,6 +14,7 @@ export const metadata = {
     getClassInfoByHash,
     getPropertyInfo,
     defineClassAttribute,
+    defineMethodAttribute,
     definePropertyAttribute
 };
 
@@ -93,13 +94,19 @@ export function getRandomHash()
  */
 function getPropertyInfo(target : Object, property : string | symbol) : PropertyInfo
 {
-    return getClassInfo(Object.getPrototypeOf(target).constructor)
-        .addProperty(property, false);
+    return getClassInfo(target)
+        .ensureProperty(property);
 }
 
 function defineClassAttribute(target, name : symbol, data : any)
 {
     getClassInfo(target).setAttribute(name, data);
+}
+
+function defineMethodAttribute(target, property : string | symbol, name : symbol, data : any)
+{
+    getClassInfo(target).ensureMethod(property)
+        .setAttribute(name, data);
 }
 
 function definePropertyAttribute(target, property : string | symbol, name : symbol, data : any)

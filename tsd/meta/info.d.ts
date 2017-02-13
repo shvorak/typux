@@ -17,6 +17,7 @@ export declare abstract class TypeInfo {
 }
 export declare class ClassInfo extends TypeInfo {
     kind: InfoKind;
+    private methods;
     private properties;
     readonly hash: string;
     readonly ctor: MethodInfo;
@@ -24,11 +25,13 @@ export declare class ClassInfo extends TypeInfo {
     constructor(hash: string, type: any, parent?: ClassInfo);
     addProperty(name: string | symbol, strict?: boolean): PropertyInfo;
     getProperties(recursive?: boolean): PropertyInfo[];
+    ensureProperty(name: any): PropertyInfo;
+    ensureMethod(name: any): MethodInfo;
 }
 export declare class PropertyInfo extends TypeInfo {
     kind: InfoKind;
 }
 export declare class MethodInfo extends TypeInfo {
     kind: InfoKind;
-    constructor(type: Function);
+    constructor(name: string | symbol, type: Function);
 }
