@@ -2,7 +2,8 @@ export enum InfoKind
 {
     Class,
     Property,
-    Method
+    Method,
+    Argument
 }
 
 export abstract class TypeInfo
@@ -34,6 +35,14 @@ export abstract class TypeInfo
             throw new Error(`Attribute ${name.toString()} not found in ${this.type}`);
         }
         return this.data[name];
+    }
+
+    public ensureAttribute<T>(name : symbol, factory : () => T) : T
+    {
+        if (false === this.hasAttribute(name)) {
+            this.setAttribute(name, factory());
+        }
+        return this.getAttribute(name);
     }
 
 }

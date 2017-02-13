@@ -2,6 +2,7 @@ export declare enum InfoKind {
     Class = 0,
     Property = 1,
     Method = 2,
+    Argument = 3,
 }
 export declare abstract class TypeInfo {
     readonly name: string | symbol;
@@ -12,6 +13,7 @@ export declare abstract class TypeInfo {
     setAttribute(name: symbol, data: any): void;
     hasAttribute(name: symbol, data?: any): boolean;
     getAttribute(name: symbol): any;
+    ensureAttribute<T>(name: symbol, factory: () => T): T;
 }
 export declare class ClassInfo extends TypeInfo {
     kind: InfoKind;
