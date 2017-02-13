@@ -68,3 +68,28 @@ class User
 }
 
 ```
+
+## Custom Class attributes support (Coming soon)
+
+```ts
+
+class EmailValidator extends Validator
+{
+    
+    public validate(value : any) {
+        ....
+    }
+    
+}
+
+const Email = Attribute(new EmailValidator());
+
+class User
+{
+
+    @Email
+    public email : string;
+    
+}
+
+```
