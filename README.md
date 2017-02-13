@@ -46,3 +46,25 @@ userInfo.getProperties(/** Recursive = true by default */).forEah(prop => {
 })
 
 ```
+
+## Custom attributes
+
+```ts
+const EMAIL_SYMBOL = Symbol('validate.email')
+
+// Custom validation function
+export const EmailValidator = (value : string) => true;
+
+// Custom attribute
+export const Email = () => Attribute(EMAIL_SYMBOL, EmailValidator) as PropertyDecorator;
+
+
+class User
+{
+    
+    @Email()
+    public email : string;
+    
+}
+
+```
