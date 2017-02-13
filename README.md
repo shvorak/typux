@@ -2,7 +2,7 @@
 # Typux
 Core functions for best code
 
-## Metadata
+## Attributes (inline usage)
 
 ```ts
 const type = Symbol('type');
@@ -35,5 +35,14 @@ console.log(userInfo.getProperties())
 //     PropertyInfo(name), <- User property
 //     PropertyInfo(email), <- User property
 // ]
+
+userInfo.getProperties(/** Recursive = true by default */).forEah(prop => {
+    if (prop.hasAttribute(type /** Symbol */)) { // id = true, name = true, email = true
+        prop.getAttribute(type /** Symbol */) // id = Number, name = String, email = String
+    }
+    if (prop.hasAttribute(validate /** Symbol */)) { // id = false, name = false, email = true
+        prop.getAttribute(type /** Symbol */) // id = Error, name = Error, email = Email
+    }
+})
 
 ```
