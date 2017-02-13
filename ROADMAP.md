@@ -1,4 +1,6 @@
 # ROADMAP
 
 ### version 0.1.0
-- Add generic Attribute decorator
+- Generic Attribute decorator
+- MethodInfo and ArgumentInfo
+- Attribute's classes
