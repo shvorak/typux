@@ -41,7 +41,7 @@ userInfo.getProperties(/** Recursive = true by default */).forEah(prop => {
         prop.getAttribute(type /** Symbol */) // id = Number, name = String, email = String
     }
     if (prop.hasAttribute(validate /** Symbol */)) { // id = false, name = false, email = true
-        prop.getAttribute(type /** Symbol */) // id = Error, name = Error, email = Email
+        prop.getAttribute(validate /** Symbol */) // id = Error, name = Error, email = Email
     }
 })
 
