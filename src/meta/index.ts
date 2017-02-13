@@ -2,7 +2,7 @@ export * from './info';
 import {Constructable} from "../types";
 import {ClassInfo, PropertyInfo} from "./info";
 
-const dict : any = {};
+const HASH_MAP : any = {};
 
 const HASH_KEY = Symbol('metadata.hash');
 const INFO_KEY = Symbol('metadata.info');
@@ -20,8 +20,8 @@ export const metadata = {
 
 function getClasses() : ClassInfo[]
 {
-    return Object.keys(dict).map(x => {
-        return dict[x];
+    return Object.keys(HASH_MAP).map(x => {
+        return HASH_MAP[x];
     });
 }
 
@@ -44,7 +44,7 @@ function getClassInfo<T>(type : Constructable<T> | T) : ClassInfo {
         let info = type[INFO_KEY] = new ClassInfo(getRandomHash(), type, base);
         let hash = type[HASH_KEY] = info.hash;
         // Save class info in custom store by hash string
-        dict[hash] = type[INFO_KEY];
+        HASH_MAP[hash] = type[INFO_KEY];
     }
 
     return type[INFO_KEY];
@@ -67,10 +67,10 @@ function getClassParent<T>(type : Constructable<T>) : Function
  * @returns {ClassInfo}
  */
 function getClassInfoByHash(hash : string) : ClassInfo {
-    if (false === dict.hasOwnProperty(hash)) {
+    if (false === HASH_MAP.hasOwnProperty(hash)) {
         throw new Error(`ClassInfo with hash code ${hash} not registered`);
     }
-    return dict[hash];
+    return HASH_MAP[hash];
 }
 
 /**
