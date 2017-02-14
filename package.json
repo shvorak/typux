@@ -19,6 +19,7 @@
     "typescript": "^2.1.5"
   },
   "dependencies": {
+    "@types/reflect-metadata": "^0.0.5",
     "tslib": "^1.5.0"
   }
 }
