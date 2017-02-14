@@ -1,6 +1,6 @@
 export * from './info';
 import {Constructable} from "../types";
-import {ClassInfo, PropertyInfo} from "./info";
+import {ClassInfo, PropertyInfo, TypeInfo, MethodInfo, ParameterInfo} from "./info";
 
 const HASH_MAP : any = {};
 
@@ -10,6 +10,7 @@ const INFO_KEY = Symbol('metadata.info');
 
 export const metadata = {
     getClasses,
+    getTypeInfo,
     getClassInfo,
     getClassInfoByHash,
     getPropertyInfo,
@@ -25,6 +26,21 @@ function getClasses() : ClassInfo[]
         return HASH_MAP[x];
     });
 }
+
+function getTypeInfo(type : any, property? : string | symbol, parameterIndex? : number) : TypeInfo {
+    const info = getClassInfo(type);
+    if (parameterIndex) {
+        return info.getMethod(property).getParameter(parameterIndex);
+    }
+    if (property) {
+        return info.hasProperty(property)
+            ? info.getProperty(property)
+            : info.getMethod(property)
+        ;
+    }
+    return info;
+}
+
 
 /**
  * Returns ClassInfo instance for passed class constructor

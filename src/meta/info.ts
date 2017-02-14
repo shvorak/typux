@@ -81,6 +81,16 @@ export class ClassInfo extends TypeInfo
         return this._properties.slice()
     }
 
+    public getProperty(name) : PropertyInfo
+    {
+        return this._properties.find(x => x.name === name);
+    }
+
+    public hasProperty(name) : boolean
+    {
+        return this._properties.some(x => x.name === name);
+    }
+
     public ensureProperty(name) : PropertyInfo
     {
         let exists = this._properties.find(x => x.name === name);
@@ -96,9 +106,19 @@ export class ClassInfo extends TypeInfo
     }
 
 
+    public getMethod(name) : MethodInfo
+    {
+        return this._methods.find(x => x.name === name);
+    }
+
+    public hasMethod(name) : boolean
+    {
+        return this._methods.some(x => x.name === name);
+    }
+
     public ensureMethod(name) : MethodInfo
     {
-        let exists = this._methods.find(x => x.name === name);
+        let exists = this.getMethod(name);
         if (exists) {
             return exists;
         }
@@ -148,9 +168,14 @@ export class MethodInfo extends TypeInfo
         return this._parameters.slice();
     }
 
+    public getParameter(index : number) : ParameterInfo
+    {
+        return this._parameters[index];
+    }
+
     public ensureParameter(index : number) : ParameterInfo
     {
-        let exists = this._parameters[index];
+        let exists = this.getParameter(index);
         if (exists) {
             return exists;
         }

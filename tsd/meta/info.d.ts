@@ -26,7 +26,11 @@ export declare class ClassInfo extends TypeInfo {
     readonly methods: MethodInfo[];
     readonly properties: PropertyInfo[];
     readonly ownProperties: PropertyInfo[];
+    getProperty(name: any): PropertyInfo;
+    hasProperty(name: any): boolean;
     ensureProperty(name: any): PropertyInfo;
+    getMethod(name: any): MethodInfo;
+    hasMethod(name: any): boolean;
     ensureMethod(name: any): MethodInfo;
 }
 export declare class PropertyInfo extends TypeInfo {
@@ -41,6 +45,7 @@ export declare class MethodInfo extends TypeInfo {
     private readonly _parameters;
     constructor(name: string | symbol, type: Function);
     readonly parameters: ParameterInfo[];
+    getParameter(index: number): ParameterInfo;
     ensureParameter(index: number): ParameterInfo;
 }
 export declare class ParameterInfo extends TypeInfo {
