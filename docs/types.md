@@ -13,3 +13,15 @@
 - setAttribute(key : Key, data : any) : self
 - getAttribute(key : Key) : any
 - hasAttribute(key : Key) : bool
+
+### ClassInfo : TypeInfo
+
+- kind : TypeKind.Class
+- members : TypeInfo[]
+- methods : MethodInfo[]
+- ownMethods : MethodInfo[]
+- properties : PropertyInfo[]
+- ownProperties : PropertyInfo[]
+- constructor(ctor : Constructable\<any\>)
+- ensureMethod(name : Key)
+- ensureProperty(name : Key)
