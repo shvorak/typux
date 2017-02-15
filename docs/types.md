@@ -15,6 +15,7 @@
 
 - name : Key
 - kind : TypeKind
+- type : Function
 - constructor(name : Key, type : Function)
 - setAttribute(key : Key, data : Any) : self
 - getAttribute(key : Key) : Any
