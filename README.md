@@ -82,7 +82,7 @@ class EmailValidator extends Validator
     
 }
 
-const Email = Attribute(new EmailValidator());
+const Email = Attribute(new EmailValidator()) as PropertyDecotator;
 
 class User
 {
