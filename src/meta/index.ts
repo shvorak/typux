@@ -1,9 +1,8 @@
 export * from './info';
 import {Constructable} from "../types";
-import {ClassInfo, PropertyInfo, TypeInfo, MethodInfo, ParameterInfo} from "./info";
+import {ClassInfo, PropertyInfo, TypeInfo} from "./info";
 
 const HASH_MAP : any = {};
-
 const HASH_KEY = Symbol('metadata.hash');
 const INFO_KEY = Symbol('metadata.info');
 
@@ -29,15 +28,17 @@ function getClasses() : ClassInfo[]
 
 function getTypeInfo(type : any, property? : string | symbol, parameterIndex? : number) : TypeInfo {
     const info = getClassInfo(type);
-    if (parameterIndex) {
-        return info.getMethod(property).getParameter(parameterIndex);
+
+    switch (arguments.length) {
+        case 2:
+            return info.hasProperty(property)
+                ? info.getProperty(property)
+                : info.getMethod(property)
+                ;
+        case 3:
+            return info.getMethod(property).getParameter(parameterIndex);
     }
-    if (property) {
-        return info.hasProperty(property)
-            ? info.getProperty(property)
-            : info.getMethod(property)
-        ;
-    }
+
     return info;
 }
 
