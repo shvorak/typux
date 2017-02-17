@@ -1,4 +1,5 @@
 import {Attribute} from "./attrs";
+import {metadata} from "./meta/index";
 export * from './attrs';
 export * from './types';
 export * from './meta';
@@ -28,3 +29,5 @@ class User extends Entity
     public email : string;
 
 }
+let userType = metadata.getClassInfo(User);
+console.log(userType);

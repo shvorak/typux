@@ -50,11 +50,13 @@ function getTypeInfo(type : any, property? : string | symbol, parameterIndex? : 
  * @returns {ClassInfo}
  */
 function getClassInfo<T>(type : Constructable<T> | T) : ClassInfo {
+
     if (typeof type === 'object') {
         // INSTANCE
         type = type.constructor as any;
     }
-    if (type[INFO_KEY] == null) {
+
+    if (type.hasOwnProperty(INFO_KEY) == false) {
         let base : any = getClassParent(<any>type);
         if (base) {
             base = getClassInfo(base);

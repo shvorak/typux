@@ -46,7 +46,7 @@ function getClassInfo(type) {
         // INSTANCE
         type = type.constructor;
     }
-    if (type[INFO_KEY] == null) {
+    if (type.hasOwnProperty(INFO_KEY) == false) {
         var base = getClassParent(type);
         if (base) {
             base = getClassInfo(base);

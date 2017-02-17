@@ -4,6 +4,7 @@ function __export(m) {
 }
 var tslib_1 = require("tslib");
 var attrs_1 = require("./attrs");
+var index_1 = require("./meta/index");
 __export(require("./attrs"));
 __export(require("./meta"));
 var EmailAttribute = (function () {
@@ -34,3 +35,5 @@ tslib_1.__decorate([
     attrs_1.Attribute(Type, String),
     tslib_1.__metadata("design:type", String)
 ], User.prototype, "email", void 0);
+var userType = index_1.metadata.getClassInfo(User);
+console.log(userType);
