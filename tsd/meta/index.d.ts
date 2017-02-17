@@ -1,12 +1,9 @@
 export * from './info';
-import { Constructable } from "../types";
-import { ClassInfo, PropertyInfo, TypeInfo } from "./info";
+import { ClassInfo, TypeInfo } from "./info";
 export declare const metadata: {
     getClasses: () => ClassInfo[];
     getTypeInfo: (type: any, property?: string | symbol, parameterIndex?: number) => TypeInfo;
-    getClassInfo: <T>(type: T | Constructable<T>) => ClassInfo;
     getClassInfoByHash: (hash: string) => ClassInfo;
-    getPropertyInfo: (target: Object, property: string | symbol) => PropertyInfo;
     defineClassAttribute: (target: any, name: symbol, data: any) => void;
     defineMethodAttribute: (target: any, property: string | symbol, name: symbol, data: any) => void;
     definePropertyAttribute: (target: any, property: string | symbol, name: symbol, data: any) => void;

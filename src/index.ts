@@ -1,33 +1,83 @@
-import {Attribute} from "./attrs";
-import {metadata} from "./meta/index";
+import {reflect} from "./reflect/index";
+import {getParent} from "./reflect/utils";
 export * from './attrs';
 export * from './types';
 export * from './meta';
 
-class EmailAttribute
+const test = Symbol('test');
+
+class Base
 {
 
 }
 
-const Type = Symbol('type');
-const Email = () => Attribute(new EmailAttribute()) as PropertyDecorator;
-
-
-class Entity
+class Test extends Base
 {
 
-    @Attribute(Type, Number)
-    public id : number;
 
 }
 
-class User extends Entity
+abstract class Validator
+{
+    abstract validate(value : any);
+}
+class EmailValidator extends Validator
+{
+    validate(value: any) {
+    }
+}
+class EnumValidator extends Validator
 {
 
-    @Email()
-    @Attribute(Type, String)
-    public email : string;
+    private _list: Object;
 
+    constructor(list : Object) {
+        super();
+        this._list = list;
+    }
+
+    validate(value: any) {
+    }
 }
-let userType = metadata.getClassInfo(User);
-console.log(userType);
+
+let type = reflect.getTypeInfo(Test);
+
+type.setAttribute(test, 1);
+type.setAttribute(new EnumValidator({}));
+
+type.setAttribute(new EmailValidator());
+
+console.log(type == reflect.getClassInfo(type.token));
+console.log(type.getAttribute(test));
+console.log(type.getAttributes(Validator));
+// console.log(type);
+// console.log(reflect.getTypeInfo(Test.prototype));
+// console.log(reflect.getTypeInfo(new Test()));
+
+// class EmailAttribute
+// {
+//
+// }
+//
+// const Type = Symbol('type');
+// const Email = () => Attribute(new EmailAttribute()) as PropertyDecorator;
+//
+//
+// class Entity
+// {
+//
+//     @Attribute(Type, Number)
+//     public id : number;
+//
+// }
+//
+// class User extends Entity
+// {
+//
+//     @Email()
+//     @Attribute(Type, String)
+//     public email : string;
+//
+// }
+// let userType = metadata.getTypeInfo(User);
+// console.log(userType);

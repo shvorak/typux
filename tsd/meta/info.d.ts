@@ -1,5 +1,4 @@
-import { Constructable } from "../types";
-export declare type TypeKey = string | symbol;
+export declare type NameType = string | symbol;
 export declare type AttributeKey = symbol | any;
 export declare enum InfoKind {
     Class = 0,
@@ -8,14 +7,14 @@ export declare enum InfoKind {
     Parameter = 3,
 }
 export declare abstract class TypeInfo {
-    readonly name: TypeKey;
+    readonly name: NameType;
     readonly kind: InfoKind;
     readonly type: any;
-    readonly data: any;
-    constructor(name: TypeKey, type?: any);
+    private readonly _attributes;
+    constructor(name: NameType, type?: any);
     setAttribute(name: AttributeKey, data: any): void;
     hasAttribute(name: AttributeKey, data?: any): boolean;
-    getAttribute<T>(name: symbol | Constructable<T>): any;
+    getAttribute<T>(name: symbol): any;
     ensureAttribute<T>(name: symbol, factory: () => T): T;
 }
 export declare class ClassInfo extends TypeInfo {

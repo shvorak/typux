@@ -1,36 +1,11 @@
-export declare const ACTION: symbol;
+/**
+ * Combination of all decorator types
+ */
+export declare type Decorators = ClassDecorator & PropertyDecorator & MethodDecorator & ParameterDecorator;
 /**
  * Generic decorator for attributes
  * @param {*} data
  * @param {symbol} symbol
  * @returns {(target:any, propertyKey:any, option:any)=>void}
  */
-export declare function Attribute(symbol: symbol | any, data?: any): ClassDecorator & PropertyDecorator & MethodDecorator & ParameterDecorator;
-/**
- * Actions map
- * Used for reverse plain action object
- * data into message instance
- * @type {{}}
- */
-export declare const actions: {};
-/**
- * Decorator for classes
- *
- * @param {string} name Action name
- * @returns {ClassDecorator}
- */
-export declare function Action(name: string): ClassDecorator;
-/**
- * Get action name from message instance
- *
- * @param {Object} message
- * @returns {string|void}
- */
-export declare function getActionName(message: any): string;
-/**
- * Returns class constructor for message
- *
- * @param {String} action Action name
- * @returns {Function|boolean}
- */
-export declare function getActionMessage(action: string): any;
+export declare function Attribute(symbol: symbol | any, data?: any): Decorators;
