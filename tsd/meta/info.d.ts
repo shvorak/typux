@@ -1,3 +1,6 @@
+import { Constructable } from "../types";
+export declare type TypeKey = string | symbol;
+export declare type AttributeKey = symbol | any;
 export declare enum InfoKind {
     Class = 0,
     Property = 1,
@@ -5,14 +8,14 @@ export declare enum InfoKind {
     Parameter = 3,
 }
 export declare abstract class TypeInfo {
-    readonly name: string | symbol;
+    readonly name: TypeKey;
     readonly kind: InfoKind;
     readonly type: any;
     readonly data: any;
-    constructor(name: string | symbol, type?: any);
-    setAttribute(name: symbol, data: any): void;
-    hasAttribute(name: symbol, data?: any): boolean;
-    getAttribute(name: symbol): any;
+    constructor(name: TypeKey, type?: any);
+    setAttribute(name: AttributeKey, data: any): void;
+    hasAttribute(name: AttributeKey, data?: any): boolean;
+    getAttribute<T>(name: symbol | Constructable<T>): any;
     ensureAttribute<T>(name: symbol, factory: () => T): T;
 }
 export declare class ClassInfo extends TypeInfo {
@@ -33,13 +36,6 @@ export declare class ClassInfo extends TypeInfo {
     hasMethod(name: any): boolean;
     ensureMethod(name: any): MethodInfo;
 }
-export declare class PropertyInfo extends TypeInfo {
-    kind: InfoKind;
-    private readonly _descriptor;
-    constructor(name: string | symbol, descriptor: PropertyDescriptor);
-    readonly readable: boolean;
-    readonly writable: boolean;
-}
 export declare class MethodInfo extends TypeInfo {
     kind: InfoKind;
     private readonly _parameters;
@@ -47,6 +43,13 @@ export declare class MethodInfo extends TypeInfo {
     readonly parameters: ParameterInfo[];
     getParameter(index: number): ParameterInfo;
     ensureParameter(index: number): ParameterInfo;
+}
+export declare class PropertyInfo extends TypeInfo {
+    kind: InfoKind;
+    private readonly _descriptor;
+    constructor(name: string | symbol, descriptor: PropertyDescriptor);
+    readonly readable: boolean;
+    readonly writable: boolean;
 }
 export declare class ParameterInfo extends TypeInfo {
     kind: InfoKind;

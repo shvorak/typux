@@ -1,3 +1,10 @@
+import {Constructable} from "../types";
+
+
+// TODO : Find best types constraint
+export type TypeKey = string | symbol;
+export type AttributeKey = symbol | any;
+
 export enum InfoKind
 {
     Class,
@@ -9,7 +16,7 @@ export enum InfoKind
 export abstract class TypeInfo
 {
 
-    public readonly name : string | symbol;
+    public readonly name : TypeKey;
 
     public readonly kind : InfoKind;
 
@@ -17,20 +24,21 @@ export abstract class TypeInfo
 
     public readonly data : any = {};
 
-    public constructor(name : string | symbol, type? : any) {
+    public constructor(name : TypeKey, type? : any) {
         this.name = name;
         this.type = type;
     }
 
-    public setAttribute(name : symbol, data : any) {
+    public setAttribute(name : AttributeKey, data : any) {
         this.data[name] = data;
     }
 
-    public hasAttribute(name : symbol, data? : any) {
+    public hasAttribute(name : AttributeKey, data? : any) {
         return this.data.hasOwnProperty(name) && (data == null || this.data[name] == data);
     }
 
-    public getAttribute(name : symbol) {
+    public getAttribute<T>(name : symbol | Constructable<T>) {
+
         if (false === this.hasAttribute(name)) {
             throw new Error(`Attribute ${name.toString()} not found in ${this.type}`);
         }
@@ -129,30 +137,6 @@ export class ClassInfo extends TypeInfo
 
 }
 
-
-export class PropertyInfo extends TypeInfo
-{
-
-    kind = InfoKind.Property;
-
-    private readonly _descriptor: PropertyDescriptor;
-
-    constructor(name: string | symbol, descriptor : PropertyDescriptor) {
-        super(name);
-        this._descriptor = descriptor;
-    }
-
-    public get readable() {
-        return this._descriptor == null || this._descriptor.get !== void 0;
-    }
-
-    public get writable() {
-        return this._descriptor == null || this._descriptor.set !== void 0;
-    }
-
-}
-
-
 export class MethodInfo extends TypeInfo
 {
 
@@ -184,6 +168,28 @@ export class MethodInfo extends TypeInfo
 
 }
 
+export class PropertyInfo extends TypeInfo
+{
+
+    kind = InfoKind.Property;
+
+    private readonly _descriptor: PropertyDescriptor;
+
+    constructor(name: string | symbol, descriptor : PropertyDescriptor) {
+        super(name);
+        this._descriptor = descriptor;
+    }
+
+    public get readable() {
+        return this._descriptor == null || this._descriptor.get !== void 0;
+    }
+
+    public get writable() {
+        return this._descriptor == null || this._descriptor.set !== void 0;
+    }
+
+}
+
 export class ParameterInfo extends TypeInfo
 {
     kind = InfoKind.Parameter;
@@ -194,5 +200,10 @@ export class ParameterInfo extends TypeInfo
         super('');
         this.index = index;
     }
+
+}
+
+function getKey()
+{
 
 }

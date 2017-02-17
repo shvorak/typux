@@ -98,31 +98,6 @@ var ClassInfo = (function (_super) {
     return ClassInfo;
 }(TypeInfo));
 exports.ClassInfo = ClassInfo;
-var PropertyInfo = (function (_super) {
-    tslib_1.__extends(PropertyInfo, _super);
-    function PropertyInfo(name, descriptor) {
-        var _this = _super.call(this, name) || this;
-        _this.kind = InfoKind.Property;
-        _this._descriptor = descriptor;
-        return _this;
-    }
-    Object.defineProperty(PropertyInfo.prototype, "readable", {
-        get: function () {
-            return this._descriptor == null || this._descriptor.get !== void 0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(PropertyInfo.prototype, "writable", {
-        get: function () {
-            return this._descriptor == null || this._descriptor.set !== void 0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return PropertyInfo;
-}(TypeInfo));
-exports.PropertyInfo = PropertyInfo;
 var MethodInfo = (function (_super) {
     tslib_1.__extends(MethodInfo, _super);
     function MethodInfo(name, type) {
@@ -151,6 +126,31 @@ var MethodInfo = (function (_super) {
     return MethodInfo;
 }(TypeInfo));
 exports.MethodInfo = MethodInfo;
+var PropertyInfo = (function (_super) {
+    tslib_1.__extends(PropertyInfo, _super);
+    function PropertyInfo(name, descriptor) {
+        var _this = _super.call(this, name) || this;
+        _this.kind = InfoKind.Property;
+        _this._descriptor = descriptor;
+        return _this;
+    }
+    Object.defineProperty(PropertyInfo.prototype, "readable", {
+        get: function () {
+            return this._descriptor == null || this._descriptor.get !== void 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(PropertyInfo.prototype, "writable", {
+        get: function () {
+            return this._descriptor == null || this._descriptor.set !== void 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return PropertyInfo;
+}(TypeInfo));
+exports.PropertyInfo = PropertyInfo;
 var ParameterInfo = (function (_super) {
     tslib_1.__extends(ParameterInfo, _super);
     function ParameterInfo(index) {
@@ -162,3 +162,5 @@ var ParameterInfo = (function (_super) {
     return ParameterInfo;
 }(TypeInfo));
 exports.ParameterInfo = ParameterInfo;
+function getKey() {
+}

@@ -6,7 +6,7 @@
     "sourceMap": false,
     "declaration": true,
     "declarationDir": "tsd/",
-    "outDir": "lib/",
+    "outDir": "out/",
     "lib": ["dom", "es2015", "es2015.symbol"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

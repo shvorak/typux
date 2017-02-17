@@ -11,7 +11,7 @@ export const ACTION  = Symbol('typux.action');
  * @param {symbol} symbol
  * @returns {(target:any, propertyKey:any, option:any)=>void}
  */
-export function Attribute(symbol : symbol, data : any) : ClassDecorator&PropertyDecorator&MethodDecorator&ParameterDecorator
+export function Attribute(symbol : symbol | any, data? : any) : ClassDecorator&PropertyDecorator&MethodDecorator&ParameterDecorator
 {
     return (target, name?, option?) => {
 
