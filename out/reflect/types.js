@@ -37,6 +37,8 @@ var ClassInfo = (function (_super) {
     tslib_1.__extends(ClassInfo, _super);
     function ClassInfo(constructor, parent) {
         var _this = _super.call(this, constructor.name, constructor) || this;
+        _this._methods = [];
+        _this._properties = [];
         _this._parent = parent;
         _this._token = utils_1.getToken(constructor);
         return _this;
@@ -55,35 +57,42 @@ var ClassInfo = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(ClassInfo.prototype, "members", {
-        get: function () {
-            return this.methods.concat(this.properties);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ClassInfo.prototype, "methods", {
-        get: function () {
-            return this._methods.slice();
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ClassInfo.prototype, "properties", {
-        get: function () {
-            return this._properties.slice()
-                .concat(this.parent ? this.parent.properties : []);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ClassInfo.prototype, "ownProperties", {
-        get: function () {
-            return this._properties.slice();
-        },
-        enumerable: true,
-        configurable: true
-    });
+    ClassInfo.prototype.hasMethod = function (name) {
+        return this._methods.some(function (x) { return x.name === name; });
+    };
+    ClassInfo.prototype.getMethod = function (name) {
+        if (false === this.hasMethod(name)) {
+            throw new Error("Method with name " + name + " doesn't exists");
+        }
+        return this._methods.find(function (x) { return x.name === name; });
+    };
+    ClassInfo.prototype.getMethods = function () {
+        return this._methods.slice();
+    };
+    ClassInfo.prototype.ensureMethod = function (name) {
+        if (false === this.hasMethod(name)) {
+            this._methods.push(new MethodInfo(name));
+        }
+        return this.getMethod(name);
+    };
+    ClassInfo.prototype.hasProperty = function (name) {
+        return this._properties.some(function (x) { return x.name === name; });
+    };
+    ClassInfo.prototype.getProperty = function (name) {
+        if (false === this.hasProperty(name)) {
+            throw new Error("Property with name " + name + " doesn't exists");
+        }
+        return this._properties.find(function (x) { return x.name === name; });
+    };
+    ClassInfo.prototype.getProperties = function () {
+        return this._properties.slice();
+    };
+    ClassInfo.prototype.ensureProperty = function (name) {
+        if (false === this.hasProperty(name)) {
+            this._properties.push(new PropertyInfo(name, {}));
+        }
+        return this.getProperty(name);
+    };
     return ClassInfo;
 }(TypeInfo));
 exports.ClassInfo = ClassInfo;
@@ -102,10 +111,16 @@ var MethodInfo = (function (_super) {
         configurable: true
     });
     MethodInfo.prototype.hasParameter = function (index) {
-        return this._parameters.length > index && index > 0;
+        return this._parameters.length > index && index > 0 && this._parameters[index] != null;
     };
     MethodInfo.prototype.getParameter = function (index) {
         return this._parameters[index];
+    };
+    MethodInfo.prototype.ensureParameter = function (index) {
+        if (false === this.hasParameter(index)) {
+            this._parameters[index] = new ParameterInfo(index);
+        }
+        return this.getParameter(index);
     };
     return MethodInfo;
 }(TypeInfo));

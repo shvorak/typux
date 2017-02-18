@@ -1,4 +1,5 @@
 import { Constructable } from "../types";
+export declare type MemberName = string | symbol;
 export declare class TypeInfo {
     readonly name: string | symbol;
     readonly type: Function;
@@ -17,17 +18,22 @@ export declare class ClassInfo extends TypeInfo {
     constructor(constructor: Function, parent?: ClassInfo);
     readonly token: symbol;
     readonly parent: ClassInfo;
-    readonly members: MethodInfo[];
-    readonly methods: MethodInfo[];
-    readonly properties: any;
-    readonly ownProperties: PropertyInfo[];
+    hasMethod(name: string | symbol): boolean;
+    getMethod(name: string | symbol): MethodInfo;
+    getMethods(): MethodInfo[];
+    ensureMethod(name: string | symbol): MethodInfo;
+    hasProperty(name: string | symbol): boolean;
+    getProperty(name: string | symbol): PropertyInfo;
+    getProperties(): PropertyInfo[];
+    ensureProperty(name: string | symbol): PropertyInfo;
 }
 export declare class MethodInfo extends TypeInfo {
     private readonly _parameters;
-    constructor(name: string | symbol, type: Function);
+    constructor(name: string | symbol, type?: Function);
     readonly parameters: ParameterInfo[];
     hasParameter(index: number): boolean;
     getParameter(index: number): ParameterInfo;
+    ensureParameter(index: number): ParameterInfo;
 }
 export declare class PropertyInfo extends TypeInfo {
     private readonly _descriptor;

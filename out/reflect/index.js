@@ -13,8 +13,18 @@ var reflect = (function () {
         enumerable: true,
         configurable: true
     });
-    reflect.getTypeInfo = function (target) {
-        return reflect.getClassInfo(target);
+    reflect.getTypeInfo = function (target, property, parameter) {
+        var info = reflect.getClassInfo(target);
+        if (arguments.length === 1) {
+            return info;
+        }
+        if (arguments.length === 2) {
+            return info.hasProperty(property) ? info.getProperty(property) : info.getMethod(property);
+        }
+        if (arguments.length === 3) {
+            return info.getMethod(property).getParameter(parameter);
+        }
+        throw new Error('Invalid arguments');
     };
     reflect.getClassInfo = function (target) {
         // TODO : Refactor
@@ -36,6 +46,25 @@ var reflect = (function () {
         }
         //     Global store     In-type store
         return classes[token] = type[infokey] = new types_1.ClassInfo(type, baseInfo);
+    };
+    reflect.defineClassAttribute = function (target, type, value) {
+        reflect.getClassInfo(target)
+            .setAttribute(type, value);
+    };
+    reflect.defineMethodAttribute = function (target, name, type, value) {
+        reflect.getClassInfo(target)
+            .ensureMethod(name)
+            .setAttribute(type, value);
+    };
+    reflect.definePropertyAttribute = function (target, name, type, value) {
+        reflect.getClassInfo(target)
+            .ensureProperty(name)
+            .setAttribute(type, value);
+    };
+    reflect.defineParameterAttribute = function (target, name, index, type, value) {
+        reflect.getClassInfo(target)
+            .ensureMethod(name).ensureParameter(index)
+            .setAttribute(type, value);
     };
     return reflect;
 }());

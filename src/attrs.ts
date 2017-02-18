@@ -1,4 +1,4 @@
-import {metadata} from "./meta/index";
+import {reflect} from "./reflect/index";
 
 /**
  * Combination of all decorator types
@@ -18,20 +18,20 @@ export function Attribute(symbol : symbol | any, data? : any) : Decorators
         // TODO : Add custom attribute class support (auto generated symbol)
         if (typeof target === 'function') {
             // Class decorator
-            metadata.defineClassAttribute(target, symbol, data);
+            reflect.defineClassAttribute(target, symbol, data);
         } else {
             if (typeof option === 'number') {
                 // Parameter decorator
-                metadata.defineParameterAttribute(target, name, option, symbol, data);
+                reflect.defineParameterAttribute(target, name, option, symbol, data);
             } else if (option === void 0) {
                 // Property decorator
-                metadata.definePropertyAttribute(target, name, symbol, data);
+                reflect.definePropertyAttribute(target, name, symbol, data);
             } else if (option === null || typeof option === 'object' && option !== null) {
                 // Method decorator or Getter/Setter
                 if (typeof option.value === 'function') {
-                    metadata.defineMethodAttribute(target, name, symbol, data);
+                    reflect.defineMethodAttribute(target, name, symbol, data);
                 } else {
-                    metadata.definePropertyAttribute(target, name, symbol, data);
+                    reflect.definePropertyAttribute(target, name, symbol, data);
                 }
             } else {
                 throw new Error('Invalid Attribute decorator call');

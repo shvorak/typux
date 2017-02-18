@@ -1,6 +1,8 @@
 import {getToken} from "./utils";
 import {Constructable} from "../types";
 
+export type MemberName = string | symbol;
+
 export class TypeInfo
 {
 
@@ -49,8 +51,8 @@ export class ClassInfo extends TypeInfo
 
     private readonly _token: symbol;
     private readonly _parent: ClassInfo;
-    private readonly _methods : MethodInfo[];
-    private readonly _properties : PropertyInfo[];
+    private readonly _methods : MethodInfo[] = [];
+    private readonly _properties : PropertyInfo[] = [];
 
     constructor(constructor : Function, parent? : ClassInfo) {
         super((constructor as any).name, constructor);
@@ -66,22 +68,48 @@ export class ClassInfo extends TypeInfo
         return this._parent;
     }
 
-    public get members() {
-        return this.methods.concat(this.properties);
+    public hasMethod(name : string | symbol) : boolean {
+        return this._methods.some(x => x.name === name);
     }
 
-    public get methods() {
+    public getMethod(name : string | symbol) : MethodInfo {
+        if (false === this.hasMethod(name)) {
+            throw new Error(`Method with name ${name} doesn't exists`);
+        }
+        return this._methods.find(x => x.name === name);
+    }
+
+    public getMethods() : MethodInfo[] {
         return this._methods.slice();
     }
 
-    public get properties() {
-        return this._properties.slice()
-            .concat(this.parent ? this.parent.properties : [])
-        ;
+    public ensureMethod(name : string | symbol) : MethodInfo {
+        if (false === this.hasMethod(name)) {
+            this._methods.push(new MethodInfo(name))
+        }
+        return this.getMethod(name);
     }
 
-    public get ownProperties() {
+    public hasProperty(name : string | symbol) : boolean {
+        return this._properties.some(x => x.name === name);
+    }
+
+    public getProperty(name : string | symbol) : PropertyInfo {
+        if (false === this.hasProperty(name)) {
+            throw new Error(`Property with name ${name} doesn't exists`);
+        }
+        return this._properties.find(x => x.name === name);
+    }
+
+    public getProperties() : PropertyInfo[] {
         return this._properties.slice();
+    }
+
+    public ensureProperty(name : string | symbol) : PropertyInfo {
+        if (false === this.hasProperty(name)) {
+            this._properties.push(new PropertyInfo(name, {}))
+        }
+        return this.getProperty(name);
     }
 
 }
@@ -91,7 +119,7 @@ export class MethodInfo extends TypeInfo
 
     private readonly _parameters : ParameterInfo[];
 
-    constructor(name : string | symbol, type : Function) {
+    constructor(name : string | symbol, type? : Function) {
         super(name, type);
         this._parameters = []; // Replace with Reflect-Metadata
     }
@@ -101,11 +129,18 @@ export class MethodInfo extends TypeInfo
     }
 
     public hasParameter(index : number) : boolean {
-        return this._parameters.length > index && index > 0
+        return this._parameters.length > index && index > 0 && this._parameters[index] != null;
     }
 
     public getParameter(index : number) : ParameterInfo {
         return this._parameters[index];
+    }
+
+    public ensureParameter(index : number) : ParameterInfo {
+        if (false === this.hasParameter(index)) {
+            this._parameters[index] = new ParameterInfo(index);
+        }
+        return this.getParameter(index);
     }
 
 }
