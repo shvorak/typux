@@ -1,6 +1,6 @@
-import { MemberName } from "./types";
+import { ClassInfo, MemberName } from "./types";
 export declare class reflect {
-    static readonly classes: any;
+    static readonly classes: ClassInfo[];
     static getTypeInfo(target: any, property?: MemberName, parameter?: number): any;
     static getClassInfo(target: any | symbol): any;
     static defineClassAttribute(target: any, type: MemberName, value?: any): void;

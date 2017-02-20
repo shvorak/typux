@@ -7,7 +7,7 @@ const infokey = Symbol('typux.reflect.info');
 export class reflect
 {
 
-    public static get classes()
+    public static get classes() : ClassInfo[]
     {
         return classes;
     }
