@@ -3,7 +3,7 @@
   "main": "out/index.js",
   "types": "tsd/index.d.ts",
   "author": "Shvorak Alexey <dr.emerido@gmail.com>",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "repository": {
     "type": "git",
