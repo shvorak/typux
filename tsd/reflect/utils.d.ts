@@ -7,6 +7,8 @@ export declare function getRandomToken(): string;
  * @returns {Function?}
  */
 export declare function getParent(target: any): any;
+export declare function hasMetadata(name: string, target: any, property: string | symbol): boolean;
+export declare function getMetadata(name: string, target: any, property: string | symbol): any;
 /**
  * Returns type constructor
  *

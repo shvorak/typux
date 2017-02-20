@@ -32,6 +32,20 @@ function getParent(target) {
     return constructor;
 }
 exports.getParent = getParent;
+function hasMetadata(name, target, property) {
+    if (Reflect == null || Reflect.hasOwnProperty('hasOwnMetadata') == false) {
+        return void 0;
+    }
+    return Reflect.hasOwnMetadata(name, target, property);
+}
+exports.hasMetadata = hasMetadata;
+function getMetadata(name, target, property) {
+    if (Reflect == null || Reflect.hasOwnProperty('getOwnMetadata') == false) {
+        return void 0;
+    }
+    return Reflect.getOwnMetadata(name, target, property);
+}
+exports.getMetadata = getMetadata;
 /**
  * Returns type constructor
  *

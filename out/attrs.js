@@ -8,10 +8,15 @@ var index_1 = require("./reflect/index");
  */
 function Attribute(symbol, data) {
     return function (target, name, option) {
-        // TODO : Add custom attribute class support (auto generated symbol)
         if (typeof target === 'function') {
-            // Class decorator
-            index_1.reflect.defineClassAttribute(target, symbol, data);
+            if (name) {
+                // Static property decorator
+                index_1.reflect.definePropertyAttribute(target, name, symbol, data);
+            }
+            else {
+                // Class decorator
+                index_1.reflect.defineClassAttribute(target, symbol, data);
+            }
         }
         else {
             if (typeof option === 'number') {

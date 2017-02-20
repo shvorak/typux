@@ -7,7 +7,7 @@
     "declaration": true,
     "declarationDir": "tsd/",
     "outDir": "out/",
-    "lib": ["dom", "es2015", "es2015.symbol"],
+    "lib": ["dom", "es2015", "es2015.symbol", "es2015.reflect"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noEmitHelpers": true,

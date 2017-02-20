@@ -16,6 +16,7 @@
     "README.md"
   ],
   "devDependencies": {
+    "reflect-metadata": "^0.1.9",
     "typescript": "^2.1.5"
   },
   "dependencies": {

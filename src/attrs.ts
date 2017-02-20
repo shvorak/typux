@@ -14,11 +14,14 @@ export type Decorators = ClassDecorator&PropertyDecorator&MethodDecorator&Parame
 export function Attribute(symbol : symbol | any, data? : any) : Decorators
 {
     return (target, name?, option?) => {
-
-        // TODO : Add custom attribute class support (auto generated symbol)
         if (typeof target === 'function') {
-            // Class decorator
-            reflect.defineClassAttribute(target, symbol, data);
+            if (name) {
+                // Static property decorator
+                reflect.definePropertyAttribute(target, name, symbol, data);
+            } else {
+                // Class decorator
+                reflect.defineClassAttribute(target, symbol, data);
+            }
         } else {
             if (typeof option === 'number') {
                 // Parameter decorator

@@ -37,6 +37,22 @@ export function getParent(target : any)
     return constructor;
 }
 
+export function hasMetadata(name : string, target : any, property : string | symbol)
+{
+    if (Reflect == null || Reflect.hasOwnProperty('hasOwnMetadata') == false) {
+        return void 0;
+    }
+    return Reflect.hasOwnMetadata(name, target, property);
+}
+
+export function getMetadata(name : string, target : any, property : string | symbol)
+{
+    if (Reflect == null || Reflect.hasOwnProperty('getOwnMetadata') == false) {
+        return void 0;
+    }
+    return Reflect.getOwnMetadata(name, target, property);
+}
+
 /**
  * Returns type constructor
  *
