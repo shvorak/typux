@@ -8,7 +8,7 @@ var reflect = (function () {
     }
     Object.defineProperty(reflect, "classes", {
         get: function () {
-            return classes;
+            return Object.getOwnPropertySymbols(classes).map(function (x) { return classes[x]; });
         },
         enumerable: true,
         configurable: true

@@ -9,7 +9,7 @@ export class reflect
 
     public static get classes() : ClassInfo[]
     {
-        return classes;
+        return Object.getOwnPropertySymbols(classes).map(x => classes[x]);
     }
 
     public static getTypeInfo(target : any, property? : MemberName, parameter? : number) {
