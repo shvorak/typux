@@ -116,6 +116,33 @@ export class ClassInfo extends TypeInfo
         return this.getProperty(name);
     }
 
+    public getAttribute(type: symbol | any): any {
+        if (false === this.hasAttribute(type)) {
+            throw new Error(`Attribute with token ${type} not found.`)
+        }
+        return this.hasOwnAttribute(type) === false
+            ? this.parent.getAttribute(type)
+            : super.getAttribute(type)
+    }
+
+    public getAttributes<T>(base: Constructable<T>): T[] {
+        return super.getAttributes(base).concat(
+            this.parent ? this.parent.getAttributes(base) : []
+        );
+    }
+
+    public getOwnAttributes<T>(base: Constructable<T>): T[] {
+        return super.getAttributes(base);
+    }
+
+    public hasAttribute(type: symbol | any) : boolean {
+        return super.hasAttribute(type) || this.parent && this.parent.hasAttribute(type);
+    }
+
+    public hasOwnAttribute(type : symbol | any) : boolean {
+        return super.hasAttribute(type);
+    }
+
 }
 
 export class MethodInfo extends TypeInfo

@@ -27,6 +27,11 @@ export declare class ClassInfo extends TypeInfo {
     getProperties(): PropertyInfo[];
     getOwnProperties(): PropertyInfo[];
     ensureProperty(name: string | symbol): PropertyInfo;
+    getAttribute(type: symbol | any): any;
+    getAttributes<T>(base: Constructable<T>): T[];
+    getOwnAttributes<T>(base: Constructable<T>): T[];
+    hasAttribute(type: symbol | any): boolean;
+    hasOwnAttribute(type: symbol | any): boolean;
 }
 export declare class MethodInfo extends TypeInfo {
     private readonly _parameters;

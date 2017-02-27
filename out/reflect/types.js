@@ -96,6 +96,26 @@ var ClassInfo = (function (_super) {
         }
         return this.getProperty(name);
     };
+    ClassInfo.prototype.getAttribute = function (type) {
+        if (false === this.hasAttribute(type)) {
+            throw new Error("Attribute with token " + type + " not found.");
+        }
+        return this.hasOwnAttribute(type) === false
+            ? this.parent.getAttribute(type)
+            : _super.prototype.getAttribute.call(this, type);
+    };
+    ClassInfo.prototype.getAttributes = function (base) {
+        return _super.prototype.getAttributes.call(this, base).concat(this.parent ? this.parent.getAttributes(base) : []);
+    };
+    ClassInfo.prototype.getOwnAttributes = function (base) {
+        return _super.prototype.getAttributes.call(this, base);
+    };
+    ClassInfo.prototype.hasAttribute = function (type) {
+        return _super.prototype.hasAttribute.call(this, type) || this.parent && this.parent.hasAttribute(type);
+    };
+    ClassInfo.prototype.hasOwnAttribute = function (type) {
+        return _super.prototype.hasAttribute.call(this, type);
+    };
     return ClassInfo;
 }(TypeInfo));
 exports.ClassInfo = ClassInfo;
