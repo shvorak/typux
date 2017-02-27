@@ -102,7 +102,7 @@ export class ClassInfo extends TypeInfo
     }
 
     public getProperties() : PropertyInfo[] {
-        return this.getProperties().concat(this.parent ? this.parent.getProperties() : []);
+        return this.getOwnProperties().concat(this.parent ? this.parent.getProperties() : []);
     }
 
     public getOwnProperties() : PropertyInfo[] {

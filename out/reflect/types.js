@@ -85,7 +85,7 @@ var ClassInfo = (function (_super) {
         return this._properties.find(function (x) { return x.name === name; });
     };
     ClassInfo.prototype.getProperties = function () {
-        return this.getProperties().concat(this.parent ? this.parent.getProperties() : []);
+        return this.getOwnProperties().concat(this.parent ? this.parent.getProperties() : []);
     };
     ClassInfo.prototype.getOwnProperties = function () {
         return this._properties.slice();
