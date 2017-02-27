@@ -25,6 +25,7 @@ export declare class ClassInfo extends TypeInfo {
     hasProperty(name: string | symbol): boolean;
     getProperty(name: string | symbol): PropertyInfo;
     getProperties(): PropertyInfo[];
+    getOwnProperties(): PropertyInfo[];
     ensureProperty(name: string | symbol): PropertyInfo;
 }
 export declare class MethodInfo extends TypeInfo {
