@@ -3,7 +3,7 @@
     "module": "commonjs",
     "target": "es5",
     "pretty": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "declaration": true,
     "declarationDir": "tsd/",
     "outDir": "out/",

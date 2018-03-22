@@ -7,7 +7,7 @@ export function getToken(target : any) : symbol
     }
     let constructor = getConstructor(target);
     if (constructor == null) {
-        throw new Error(`Can't retrieve constructor from ${target}`);
+        throw new Error(`Can't retrieve constructor from value "${target}"`);
     }
 
     if (constructor.hasOwnProperty(SIGN) === false) {

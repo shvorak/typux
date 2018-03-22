@@ -2,9 +2,14 @@
   "name": "typux",
   "main": "out/index.js",
   "types": "tsd/index.d.ts",
-  "author": "Shvorak Alexey <dr.emerido@gmail.com>",
+  "author": "Shvorak Alexey <alex@shvorak.com>",
   "version": "0.1.5",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "develop": "tsc --watch",
+    "test": "nyc mocha -r ts-node/register -r source-map-support/register --recursive test/**/*.ts"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/emerido/typux.git"
@@ -16,11 +21,34 @@
     "README.md"
   ],
   "devDependencies": {
-    "reflect-metadata": "^0.1.9",
-    "typescript": "^2.1.5"
+    "@types/chai": "^4.1.2",
+    "@types/mocha": "^5.0.0",
+    "@types/reflect-metadata": "^0.0.5",
+    "chai": "^4.1.2",
+    "mocha": "^5.0.4",
+    "nyc": "^11.6.0",
+    "source-map-support": "^0.5.4",
+    "ts-node": "^5.0.1",
+    "typescript": "^2.1.5",
+    "tslib": "^1.9.0"
   },
   "dependencies": {
-    "@types/reflect-metadata": "^0.0.5",
-    "tslib": "^1.5.0"
+    "reflect-metadata": "^0.1.9"
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "coverage",
+      "test",
+      "out"
+    ],
+    "reporter": [
+      "html"
+    ],
+    "all": true
   }
 }
