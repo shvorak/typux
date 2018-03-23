@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {getToken} from '../src/reflect/utils';
+import {getToken, getConstructor} from '../src/reflect/utils';
 
 describe('utils', function() {
     describe('#getToken', function() {
@@ -23,7 +23,9 @@ describe('utils', function() {
 
 
     describe("#getConstructor", () => {
-
+        it('should returns void for null', () => {
+            assert.equal(getConstructor(null), undefined);
+        });
     });
 
 });
