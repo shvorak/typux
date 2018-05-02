@@ -3,6 +3,8 @@ import {Constructable} from "../types";
 
 export type MemberName = string | symbol;
 
+export type AnyInfo = ClassInfo | MethodInfo | ParameterInfo | PropertyInfo;
+
 export class TypeInfo
 {
 

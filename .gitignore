@@ -6,5 +6,5 @@ coverage
 node_modules
 npm-debug.log
 
-src/**/*.js
-out
+source/**/*.js
+output

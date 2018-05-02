@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {getToken, getConstructor} from '../src/reflect/utils';
+import {getToken, getConstructor} from '../source/reflect/utils';
 
 describe('utils', function() {
     describe('#getToken', function() {

@@ -1,3 +1,7 @@
+export declare type Func0<TOut> = () => TOut;
+export declare type Func1<TOne, TOut> = (value1: TOne) => TOut;
+export declare type Func2<TOne, TTwo, TOut> = (value1: TOne, value2: TTwo) => TOut;
+export declare type Action<T> = (value: T) => any;
 /**
  * Nullable type
  * ex. let email : Nullable<string>;

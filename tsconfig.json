@@ -5,8 +5,8 @@
     "pretty": true,
     "sourceMap": true,
     "declaration": true,
-    "declarationDir": "tsd/",
-    "outDir": "out/",
+    "declarationDir": "types/",
+    "outDir": "output/",
     "lib": ["dom", "es2015", "es2015.symbol", "es2015.reflect"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -17,6 +17,6 @@
     "node_modules"
   ],
   "files" : [
-    "src/index.ts"
+    "source/index.ts"
   ]
 }

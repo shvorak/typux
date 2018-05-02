@@ -1,4 +1,4 @@
-const SIGN = Symbol('typux.reflect.token');
+const TOKEN = Symbol('typux.reflect.token');
 
 export function getToken(target : any) : symbol
 {
@@ -10,10 +10,11 @@ export function getToken(target : any) : symbol
         throw new Error(`Can't retrieve constructor from value "${target}"`);
     }
 
-    if (constructor.hasOwnProperty(SIGN) === false) {
-        constructor[SIGN] = Symbol(`typux.reflect.${getRandomToken()}`)
+    if (constructor.hasOwnProperty(TOKEN) === false) {
+        constructor[TOKEN] = Symbol(`typux.reflect.${getRandomToken()}`)
     }
-    return constructor[SIGN];
+
+    return constructor[TOKEN];
 }
 
 export function getRandomToken()

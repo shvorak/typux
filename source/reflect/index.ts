@@ -1,8 +1,10 @@
 import {getConstructor, getParent, getToken} from "./utils";
-import {ClassInfo, MemberName} from "./types";
+import {AnyInfo, ClassInfo, MemberName} from "./types";
 
 const classes : any = {};
 const infokey = Symbol('typux.reflect.info');
+
+
 
 export class reflect
 {
@@ -12,7 +14,7 @@ export class reflect
         return Object.getOwnPropertySymbols(classes).map(x => classes[x]);
     }
 
-    public static getTypeInfo(target : any, property? : MemberName, parameter? : number) {
+    public static getTypeInfo(target : any, property? : MemberName, parameter? : number) : AnyInfo {
         let info = reflect.getClassInfo(target);
         if (arguments.length === 1) {
             return info;
@@ -26,7 +28,7 @@ export class reflect
         throw new Error('Invalid arguments');
     }
 
-    public static getClassInfo(target : any | symbol) {
+    public static getClassInfo(target : any | symbol) : ClassInfo {
         // TODO : Refactor
         let token = getToken(target);
         if (classes.hasOwnProperty(token)) {
@@ -49,7 +51,6 @@ export class reflect
             baseInfo = reflect.getClassInfo(baseType);
         }
 
-        //     Global store     In-type store
         return classes[token] = type[infokey] = new ClassInfo(type, baseInfo);
     }
 

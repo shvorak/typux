@@ -1,5 +1,6 @@
 import { Constructable } from "../types";
 export declare type MemberName = string | symbol;
+export declare type AnyInfo = ClassInfo | MethodInfo | ParameterInfo | PropertyInfo;
 export declare class TypeInfo {
     readonly name: string | symbol;
     readonly type: Function;

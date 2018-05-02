@@ -1,4 +1,4 @@
-import {reflect} from "./reflect/index";
+import {reflect} from "./reflect";
 
 /**
  * Combination of all decorator types
