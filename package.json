@@ -3,7 +3,7 @@
   "main": "out/index.js",
   "types": "tsd/index.d.ts",
   "author": "Shvorak Alexey <alex@shvorak.com>",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
