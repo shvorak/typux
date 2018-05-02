@@ -196,6 +196,10 @@ export class PropertyInfo extends TypeInfo
         return this._descriptor == null || this._descriptor.set !== void 0;
     }
 
+    public get propertyType() : PropertyType {
+        return this.getAttributes(PropertyType)[0] || undefined;
+    }
+
 }
 
 export class ParameterInfo extends TypeInfo
@@ -206,6 +210,21 @@ export class ParameterInfo extends TypeInfo
     constructor(index : number) {
         super(index.toString());
         this.index = index;
+    }
+
+}
+
+
+export class PropertyType
+{
+
+    public readonly type : Function;
+
+    public readonly isList : boolean;
+
+    constructor(type: Function, isList = false) {
+        this.type = type;
+        this.isList = isList;
     }
 
 }
