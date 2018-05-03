@@ -1,5 +1,6 @@
-import {reflect} from "./reflect";
-import {PropertyType} from "./reflect/types";
+import {reflect, typeKey} from "./reflect";
+import {Type} from "./reflect/types";
+import {Constructable} from "./types";
 
 /**
  * Combination of all decorator types
@@ -44,6 +45,6 @@ export function Attribute(symbol : symbol | any, data? : any) : Decorators
     }
 }
 
-// TODO : Add ParameterDecorator support
-export const TypeOf = (type : Function) => Attribute(new PropertyType(type)) as PropertyDecorator;
-export const ListOf = (type : Function) => Attribute(new PropertyType(type), true) as PropertyDecorator;
+export const TypeOf = (type : Constructable<any>) => Attribute(typeKey, new Type(type)) as PropertyDecorator & ParameterDecorator;
+
+export const ListOf = (type : Constructable<any>) => Attribute(typeKey, new Type(type, true)) as PropertyDecorator & ParameterDecorator;

@@ -1,9 +1,28 @@
 import {getToken} from "./utils";
 import {Constructable} from "../types";
+import {typeKey} from "./index";
 
 export type MemberName = string | symbol;
 
 export type AnyInfo = ClassInfo | MethodInfo | ParameterInfo | PropertyInfo;
+
+/**
+ * Describes property or parameter value type
+ *
+ */
+export class Type
+{
+
+    public readonly type : Function;
+
+    public readonly isList : boolean;
+
+    constructor(type: Function, isList = false) {
+        this.type = type;
+        this.isList = isList;
+    }
+
+}
 
 export class TypeInfo
 {
@@ -196,8 +215,10 @@ export class PropertyInfo extends TypeInfo
         return this._descriptor == null || this._descriptor.set !== void 0;
     }
 
-    public get propertyType() : PropertyType {
-        return this.getAttributes(PropertyType)[0] || undefined;
+    public get propertyType() : Type {
+        return this.hasAttribute(typeKey)
+            ? this.getAttribute(typeKey)
+            : undefined;
     }
 
 }
@@ -212,19 +233,10 @@ export class ParameterInfo extends TypeInfo
         this.index = index;
     }
 
-}
-
-
-export class PropertyType
-{
-
-    public readonly type : Function;
-
-    public readonly isList : boolean;
-
-    constructor(type: Function, isList = false) {
-        this.type = type;
-        this.isList = isList;
+    public get parameterType() : Type {
+        return this.hasAttribute(typeKey)
+            ? this.getAttribute(typeKey)
+            : undefined;
     }
 
 }
