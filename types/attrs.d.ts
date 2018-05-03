@@ -10,5 +10,5 @@ export declare type Decorators = ClassDecorator & PropertyDecorator & MethodDeco
  * @returns {(target:any, propertyKey:any, option:any)=>void}
  */
 export declare function Attribute(symbol: symbol | any, data?: any): Decorators;
-export declare const TypeOf: (type: Constructable<any>) => PropertyDecorator & ParameterDecorator;
-export declare const ListOf: (type: Constructable<any>) => PropertyDecorator & ParameterDecorator;
+export declare function TypeOf(type: Constructable): PropertyDecorator & ParameterDecorator;
+export declare function ListOf(type: Constructable): PropertyDecorator & ParameterDecorator;

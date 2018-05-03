@@ -13,11 +13,11 @@ export type AnyInfo = ClassInfo | MethodInfo | ParameterInfo | PropertyInfo;
 export class Type
 {
 
-    public readonly type : Function;
+    public readonly type : Constructable;
 
     public readonly isList : boolean;
 
-    constructor(type: Function, isList = false) {
+    constructor(type: Constructable, isList = false) {
         this.type = type;
         this.isList = isList;
     }

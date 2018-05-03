@@ -17,7 +17,7 @@ export interface Dictionary<TValue> {
  * Constructor type
  * ex. function find<T>(type : Constructable<T>) : T;
  */
-export interface Constructable<T> {
+export interface Constructable<T = any> {
     new (...args: any[]): T;
     prototype: T;
 }

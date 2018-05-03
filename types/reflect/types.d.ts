@@ -6,9 +6,9 @@ export declare type AnyInfo = ClassInfo | MethodInfo | ParameterInfo | PropertyI
  *
  */
 export declare class Type {
-    readonly type: Function;
+    readonly type: Constructable;
     readonly isList: boolean;
-    constructor(type: Function, isList?: boolean);
+    constructor(type: Constructable, isList?: boolean);
 }
 export declare class TypeInfo {
     readonly name: string | symbol;

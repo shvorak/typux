@@ -45,6 +45,12 @@ function Attribute(symbol, data) {
     };
 }
 exports.Attribute = Attribute;
-exports.TypeOf = function (type) { return Attribute(reflect_1.typeKey, new types_1.Type(type)); };
-exports.ListOf = function (type) { return Attribute(reflect_1.typeKey, new types_1.Type(type, true)); };
+function TypeOf(type) {
+    return Attribute(reflect_1.typeKey, new types_1.Type(type));
+}
+exports.TypeOf = TypeOf;
+function ListOf(type) {
+    return Attribute(reflect_1.typeKey, new types_1.Type(type, true));
+}
+exports.ListOf = ListOf;
 //# sourceMappingURL=attrs.js.map
