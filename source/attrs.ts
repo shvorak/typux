@@ -45,6 +45,11 @@ export function Attribute(symbol : symbol | any, data? : any) : Decorators
     }
 }
 
-export const TypeOf = (type : Constructable<any>) => Attribute(typeKey, new Type(type)) as PropertyDecorator & ParameterDecorator;
 
-export const ListOf = (type : Constructable<any>) => Attribute(typeKey, new Type(type, true)) as PropertyDecorator & ParameterDecorator;
+export function TypeOf(type: Constructable) : PropertyDecorator & ParameterDecorator {
+    return Attribute(typeKey, new Type(type));
+}
+
+export function ListOf(type : Constructable) : PropertyDecorator & ParameterDecorator {
+    return Attribute(typeKey, new Type(type, true));
+}
