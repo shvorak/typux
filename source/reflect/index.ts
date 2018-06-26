@@ -2,8 +2,9 @@ import {getConstructor, getParent, getToken} from "./utils";
 import {AnyInfo, ClassInfo, MemberName} from "./types";
 
 const classes : any = {};
-const infokey = Symbol('typux.reflect.info');
 
+export const infoKey = Symbol('typux.reflect.info');
+export const typeKey = Symbol('typux.reflect.type');
 
 
 export class reflect
@@ -41,8 +42,8 @@ export class reflect
             throw new Error(`Invalid class type`);
         }
 
-        if (type.hasOwnProperty(infokey)) {
-            return type[infokey]; // Already have info
+        if (type.hasOwnProperty(infoKey)) {
+            return type[infoKey]; // Already have info
         }
 
         let baseInfo;
@@ -51,7 +52,7 @@ export class reflect
             baseInfo = reflect.getClassInfo(baseType);
         }
 
-        return classes[token] = type[infokey] = new ClassInfo(type, baseInfo);
+        return classes[token] = type[infoKey] = new ClassInfo(type, baseInfo);
     }
 
     public static defineClassAttribute(target : any, type : MemberName, value? : any) {
