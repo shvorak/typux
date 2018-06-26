@@ -41,7 +41,7 @@ export class TypeInfo
     public setAttribute(type : symbol | any, value? : any) {
         let token = getToken(type);
         if (this._attributes.hasOwnProperty(token)) {
-            throw new Error(`Attribute with token ${token} already added`);
+            throw new Error(`Attribute with token ${token.toString()} already added`);
         }
         this._attributes[token] = value || type;
     }
@@ -53,7 +53,7 @@ export class TypeInfo
     public getAttribute(type : symbol | any) {
         let token = getToken(type);
         if (false === this._attributes.hasOwnProperty(token)) {
-            throw new Error(`Attribute with token ${token} not found.`)
+            throw new Error(`Attribute with token ${token.toString()} not found.`)
         }
         return this._attributes[token];
     }
@@ -95,7 +95,7 @@ export class ClassInfo extends TypeInfo
 
     public getMethod(name : string | symbol) : MethodInfo {
         if (false === this.hasMethod(name)) {
-            throw new Error(`Method with name ${name} doesn't exists`);
+            throw new Error(`Method with name ${name.toString()} doesn't exists`);
         }
         return this._methods.find(x => x.name === name);
     }
@@ -117,7 +117,7 @@ export class ClassInfo extends TypeInfo
 
     public getProperty(name : string | symbol) : PropertyInfo {
         if (false === this.hasProperty(name)) {
-            throw new Error(`Property with name ${name} doesn't exists`);
+            throw new Error(`Property with name ${name.toString()} doesn't exists`);
         }
         return this._properties.find(x => x.name === name);
     }
